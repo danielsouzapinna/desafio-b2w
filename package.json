@@ -1,0 +1,28 @@
+{
+  "name": "desafio-b2w",
+  "version": "1.0.0",
+  "description": "Desafio para B2W",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "NodeJS",
+    "MongoDB",
+    "Docker",
+    "Swagger",
+    "Restify",
+    "B2W",
+    "Desafio",
+    "StarWars"
+  ],
+  "author": "Daniel Pinna",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.3.9",
+    "mongoose-string-query": "^0.2.5",
+    "mongoose-timestamp": "^0.6.0",
+    "restify": "^7.2.2"
+  }
+}
