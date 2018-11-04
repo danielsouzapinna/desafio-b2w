@@ -17,14 +17,13 @@ class PlanetController {
         return next();
       }
 
-      this.service.create(planet).then((doc) => {
+      return this.service.create(planet).then((doc) => {
         this.logger.info(`PlanetController::create => Planeta ${planet.name} cadastrado com sucesso.`);
         res.send(201, { id: doc._id });
         return next();
       }).catch((err) => {
         this.logger.error(`PlanetController::create => Falha ao cadastrar o planeta: ${planet.name}`);
-        console.log(err);
-        res.send(err);
+        res.send(500);
         return next();
       });
     }
@@ -32,7 +31,7 @@ class PlanetController {
 
     list(req, res, next) {
       this.logger.info('PlanetController::list => Iniciando listagem de planetas.');
-      this.repository.list().then((doc) => {
+      return this.repository.list().then((doc) => {
         this.logger.info('PlanetController::list => Planetas retornados com sucesso.');
         res.send(200, doc);
           return next();
@@ -54,7 +53,7 @@ class PlanetController {
         return next();
       }
   
-      this.repository.getByName(req.params.name).then((doc) => {
+      return this.repository.getByName(req.params.name).then((doc) => {
         if (doc) {
           this.logger.info(`PlanetController::get => A consulta retornou o planeta: ${doc.name}.`);
           res.send(200, doc);
@@ -65,11 +64,6 @@ class PlanetController {
         return next();
       }).catch((err) => {
         this.logger.error(`PlanetController::get => Falha ao consultar o planeta de nome: ${req.params.name}.`);
-        console.log(err);
-        if (err && err.body && err.body.code === 'InvalidArgument') {
-          res.send(404);
-          return next();
-        }
         res.send(500);
         return next();
       });
@@ -85,7 +79,7 @@ class PlanetController {
         return next();
       }
   
-      this.repository.getById(req.params.id).then((doc) => {
+      return this.repository.getById(req.params.id).then((doc) => {
         if (doc) {
           this.logger.info(`PlanetController::get => A consulta retornou o planeta: ${doc.name}.`);
           res.send(200, doc);
@@ -96,7 +90,6 @@ class PlanetController {
         return next();
       }).catch((err) => {
         this.logger.error(`PlanetController::get => Falha ao consultar a planeta de ID: ${req.params.id}.`);
-        console.log(err);
         if (err && err.body && err.body.code === 'InvalidArgument') {
           res.send(404);
           return next();
@@ -116,7 +109,7 @@ class PlanetController {
         return next();
       }
 
-      this.repository.delete(req.params.id).then((doc) => {
+      return this.repository.delete(req.params.id).then((doc) => {
         if (doc.n === 1) {
           this.logger.info(`PlanetController::remove => Planeta de ID ${req.params.id} removido com sucesso.`);
           res.send(204);
@@ -128,11 +121,6 @@ class PlanetController {
         return next();
       }).catch((err) => {
         this.logger.error(`PlanetController::remove => Falha ao remover o planeta de ID: ${req.params.id}.`);
-        console.log(err);
-        if (err && err.body && err.body.code === 'InvalidArgument') {
-          res.send(404);
-          return next();
-        }
         res.send(500);
         return next();
       });
