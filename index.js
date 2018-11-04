@@ -6,8 +6,6 @@ const path = require('path');
 const { readdirSync } = require('fs');
 const morgan = require('morgan');
 const logger = require('./winston-custom-log');
-//const restifySwaggerJsdoc = require('restify-swagger-jsdoc');
-//const errors = require('restify-errors');
 
 const server = restify.createServer({
     name    : config.name,
