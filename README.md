@@ -28,8 +28,8 @@ docker-compose -f docker-compose.test.yml up
 ```
 {
     "name": "Alderaan",
-	"climate": "temperate",
-	"terrain": "grasslands, mountains"
+    "climate": "temperate",
+    "terrain": "grasslands, mountains"
 }
 ```
 
