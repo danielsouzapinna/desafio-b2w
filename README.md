@@ -18,6 +18,8 @@ docker-compose -f docker-compose.test.yml up
 
 ## APIs do projeto
 
+* URL_BASE = http://localhost:3000
+
 #### Listar
 * GET /planets
 
