@@ -31,6 +31,9 @@ class PlanetService {
                 this.logger.error(`PlanetService::updateNumbersOfFilms => Participacoes em filmes nao foi encontrada.`);
                 throw new this.errors.BadRequestError('Planet is not valid!');
             }
+        }).catch((err) => {
+            this.logger.error(`PlanetService::updateNumbersOfFilms => Falha ao obter participações em filmes para o planeta: ${planet.name}`);
+            throw err;
         });
     }
 }
