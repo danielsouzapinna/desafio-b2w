@@ -11,6 +11,13 @@ Para rodar o projeto é necessário possuir o Docker e Docker-compose instalados
 docker-compose up
 ```
 
+#### Para parar o projeto
+```
+ctrl + c
+docker-compose down
+docker-compose stop
+```
+
 #### Para executar os testes do projeto
 ```
 docker-compose -f docker-compose.test.yml up

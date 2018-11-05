@@ -23,8 +23,13 @@ class PlanetController {
         return next();
       }).catch((err) => {
         this.logger.error(`PlanetController::create => Falha ao cadastrar o planeta: ${planet.name}`);
-        res.send(500);
-        return next();
+        if(err.body.code == 'BadRequest') {
+          res.send(err);
+          return next();
+        } else {
+          res.send(500);
+          return next();
+        }
       });
     }
 
@@ -37,7 +42,6 @@ class PlanetController {
           return next();
       }).catch((err) => {
         this.logger.error('PlanetController::list => Falha ao listar planetas.');
-        console.log(err);
         res.send(500);
         return next();
       });

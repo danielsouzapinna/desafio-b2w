@@ -43,7 +43,11 @@ describe('Unit Test - PlanetController', function() {
 
         it('Não deve cadastrar o planeta e retornar HTTP Status Code 500', (done) => {
             let isValidPlanet = sinon.stub(controller, "isValidPlanet").returns(true);
-            let serviceCreate = sinon.stub(controller.service, "create").rejects('error');
+            let serviceCreate = sinon.stub(controller.service, "create").rejects({
+                body:{
+                    code: 'e01'
+                }
+            });
             let sendSpy = sinon.spy(res, "send");
             
             controller.create(req, res, next).then(()=> {
@@ -76,17 +80,12 @@ describe('Unit Test - PlanetController', function() {
         });
 
         it('Não deve retornar a lista de planetas e retornar HTTP Status Code 500', (done) => {
-            let isValidPlanet = sinon.stub(controller, "isValidPlanet").returns(true);
-            let serviceCreate = sinon.stub(controller.service, "create").rejects('error');
+            let repositoryList = sinon.stub(controller.repository, "list").rejects({});
             let sendSpy = sinon.spy(res, "send");
             
-            controller.create(req, res, next).then(()=> {
-                expect(isValidPlanet.calledOnce).to.be.equal(true);
-                expect(serviceCreate.calledOnce).to.be.equal(true);
+            controller.list(req, res, next).then(()=> {
+                expect(repositoryList.calledOnce).to.be.equal(true);
                 expect(sendSpy.withArgs(500).calledOnce).to.be.equal(true);
-
-                isValidPlanet.restore();
-                serviceCreate.restore();
                 sendSpy.restore();
                 done();
             }).catch((done));
