@@ -5,7 +5,7 @@ module.exports = function(server) {
 
 	server.post({path: PATH, version: '1.0.0'}, PlanetController.create.bind(PlanetController));
 
-    server.get({path: PATH, version: '1.0.0'},  PlanetController.list.bind(PlanetController));
+    server.get({path: PATH, version: '1.0.0'},  PlanetController.query.bind(PlanetController));
 
     server.get({path: `${PATH}/name/:name`, version: '1.0.0'},  PlanetController.getByName.bind(PlanetController));
 

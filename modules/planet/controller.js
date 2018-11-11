@@ -34,40 +34,52 @@ class PlanetController {
     }
 
 
-    list(req, res, next) {
+    query(req, res, next) {
+      console.log(req.getQuery());
+      if(!req.getQuery()) {
+        return this.getAll(req, res, next);
+      } else {
+        return this.getByName(req, res, next);
+      }
+    }
+
+
+
+
+    getAll(req, res, next) {
       this.logger.info('PlanetController::list => Iniciando listagem de planetas.');
-      return this.repository.list().then((doc) => {
-        this.logger.info('PlanetController::list => Planetas retornados com sucesso.');
-        res.send(200, doc);
+        return this.repository.list().then((doc) => {
+          this.logger.info('PlanetController::list => Planetas retornados com sucesso.');
+          res.send(200, doc);
+            return next();
+        }).catch((err) => {
+          this.logger.error('PlanetController::list => Falha ao listar planetas.');
+          res.send(500);
           return next();
-      }).catch((err) => {
-        this.logger.error('PlanetController::list => Falha ao listar planetas.');
-        res.send(500);
-        return next();
-      });
+        });
     }
 
 
     getByName(req, res, next) {
-      this.logger.info(`PlanetController::get => Iniciando consulta de planeta por nome: ${req.params.name}`);
+      this.logger.info(`PlanetController::getByNameQueryString => Iniciando consulta de planeta por nome: ${req.query.name}`);
   
-      if (!req.params.name) {
-        this.logger.error('PlanetController::get => Um ou mais campos obrigatórios não foram informados.');
+      if (!req.query.name) {
+        this.logger.error('PlanetController::getByNameQueryString => Um ou mais campos obrigatórios não foram informados.');
         res.send(400, { message: 'Campo Name é obrigatório.' });
         return next();
       }
   
-      return this.repository.getByName(req.params.name).then((doc) => {
+      return this.repository.getByName(req.query.name).then((doc) => {
         if (doc) {
-          this.logger.info(`PlanetController::get => A consulta retornou o planeta: ${doc.name}.`);
+          this.logger.info(`PlanetController::getByNameQueryString => A consulta retornou o planeta: ${doc.name}.`);
           res.send(200, doc);
           return next();
         }
-        this.logger.warn(`PlanetController::get => A consulta não encontrou nenhum planeta de nome: ${req.params.name}.`);
+        this.logger.warn(`PlanetController::getByNameQueryString => A consulta não encontrou nenhum planeta de nome: ${req.query.name}.`);
         res.send(404);
         return next();
       }).catch((err) => {
-        this.logger.error(`PlanetController::get => Falha ao consultar o planeta de nome: ${req.params.name}.`);
+        this.logger.error(`PlanetController::getByNameQueryString => Falha ao consultar o planeta de nome: ${req.query.name}.`);
         res.send(500);
         return next();
       });
@@ -75,25 +87,25 @@ class PlanetController {
 
 
     getById(req, res, next) {
-      this.logger.info(`PlanetController::get => Iniciando consulta do planeta de ID: ${req.params.id}`);
+      this.logger.info(`PlanetController::getById => Iniciando consulta do planeta de ID: ${req.params.id}`);
   
       if (!req.params.id) {
-        this.logger.error('PlanetController::get => Um ou mais campos obrigatórios não foram informados.');
+        this.logger.error('PlanetController::getById => Um ou mais campos obrigatórios não foram informados.');
         res.send(400, { message: 'Campo ID é obrigatório.' });
         return next();
       }
   
       return this.repository.getById(req.params.id).then((doc) => {
         if (doc) {
-          this.logger.info(`PlanetController::get => A consulta retornou o planeta: ${doc.name}.`);
+          this.logger.info(`PlanetController::getById => A consulta retornou o planeta: ${doc.name}.`);
           res.send(200, doc);
           return next();
         }
-        this.logger.warn(`PlanetController::get => A consulta não encontrou nenhum planeta de ID: ${req.params.id}.`);
+        this.logger.warn(`PlanetController::getById => A consulta não encontrou nenhum planeta de ID: ${req.params.id}.`);
         res.send(404);
         return next();
       }).catch((err) => {
-        this.logger.error(`PlanetController::get => Falha ao consultar a planeta de ID: ${req.params.id}.`);
+        this.logger.error(`PlanetController::getById => Falha ao consultar a planeta de ID: ${req.params.id}.`);
         if (err && err.body && err.body.code === 'InvalidArgument') {
           res.send(404);
           return next();
