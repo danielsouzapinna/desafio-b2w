@@ -44,7 +44,7 @@ docker-compose -f docker-compose.test.yml up
 * GET /planets/id-desejado
 
 #### Buscar por nome
-* GET /planets/name/nome-desejado
+* GET /planets?name=nome-desejado
 
 #### Remover
 * DELETE /planets/id-desejado

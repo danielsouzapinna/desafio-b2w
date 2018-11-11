@@ -6,5 +6,7 @@ module.exports = {
     base_url: process.env.BASE_URL || "http://localhost:3000",
     db: {
         uri: process.env.MONGODB_URI || 'mongodb://mongo/desafio-b2w',
-    }
+    },
+    page: 1,
+    per_page: 10,
 }

@@ -20,10 +20,21 @@ class PlanetRepository {
         });
     }
 
-    list() {
+    list(page, perPage) {
       this.logger.info('PlanetRepository::list => Consultando planetas no banco de dados');
-      return this.model.find({});
-    }
+      return this.model.find()
+        .skip((page - 1) * perPage)
+        .limit(perPage)
+        .then((doc) => {
+          return this.model.estimatedDocumentCount({})
+            .then((total) => {
+              let result = {};
+              result.count = total;
+              result.results = doc;
+              return result;
+            })
+        });
+      }
 
     getByName(planetName) {
       this.logger.info(`PlanetRepository::getByName => Consultando o planeta : ${planetName} no banco de dados`);

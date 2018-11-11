@@ -4,6 +4,7 @@ class PlanetController {
         this.repository = require('./repository');
         this.service = require('./service');
         this.logger = require('../../winston-custom-log');
+        this.config = require('../../config');
     }
     
 
@@ -35,9 +36,12 @@ class PlanetController {
 
 
     query(req, res, next) {
-      console.log(req.getQuery());
-      if(!req.getQuery()) {
-        return this.getAll(req, res, next);
+      let page = req.query && req.query.page ? Number(req.query.page) : Number(this.config.page);
+      let perPage = req.query && req.query.per_page ? Number(req.query.perPage) : Number(this.config.per_page);
+      
+      console.log(perPage)
+      if(!req.query.name) {
+        return this.getAll(req, res, next, page, perPage);
       } else {
         return this.getByName(req, res, next);
       }
@@ -46,12 +50,12 @@ class PlanetController {
 
 
 
-    getAll(req, res, next) {
+    getAll(req, res, next, page, perPage) {
       this.logger.info('PlanetController::list => Iniciando listagem de planetas.');
-        return this.repository.list().then((doc) => {
+        return this.repository.list(page, perPage).then((doc) => {
           this.logger.info('PlanetController::list => Planetas retornados com sucesso.');
           res.send(200, doc);
-            return next();
+          return next();
         }).catch((err) => {
           this.logger.error('PlanetController::list => Falha ao listar planetas.');
           res.send(500);
@@ -60,7 +64,7 @@ class PlanetController {
     }
 
 
-    getByName(req, res, next) {
+    getByName(req, res, next, page, perPage) {
       this.logger.info(`PlanetController::getByNameQueryString => Iniciando consulta de planeta por nome: ${req.query.name}`);
   
       if (!req.query.name) {

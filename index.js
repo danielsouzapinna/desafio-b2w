@@ -1,6 +1,7 @@
 const config = require('./config');
 const restify = require('restify');
 const restifyPlugins = require('restify').plugins;
+const paginate = require('restify-paginate');
 const mongoose = require('mongoose');
 const path = require('path');
 const { readdirSync } = require('fs');
@@ -17,7 +18,7 @@ server.use(restifyPlugins.jsonBodyParser({ mapParams: true }));
 server.use(restifyPlugins.acceptParser(server.acceptable));
 server.use(restifyPlugins.queryParser({ mapParams: true }));
 server.use(restifyPlugins.fullResponse());
-
+server.use(paginate(server));
 
 server.use(morgan('{"DATA=>": ":date[clf]", "HTTP METHOD=>": ":method", "STATUS=>": ":status", "URL=>": ":url",  "TEMPO=>": ":response-time", "USER_AGENT=>": ":user-agent"}', {
 	stream: {

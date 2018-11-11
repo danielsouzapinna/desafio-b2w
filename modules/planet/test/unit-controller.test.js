@@ -68,8 +68,9 @@ describe('Unit Test - PlanetController', function() {
         it('Deve retornar a lista de planetas e retornar HTTP Status Code 200', (done) => {
             let repositoryList = sinon.stub(controller.repository, "list").resolves([{id:1}]);
             let sendSpy = sinon.spy(res, "send");
+            req = {body: {}, query:{}};
 
-            controller.list(req, res, next).then((result)=> {
+            controller.query(req, res, next).then((result)=> {
                 expect(repositoryList.calledOnce).to.be.equal(true);
                 expect(sendSpy.withArgs(200, [{id:1}]).calledOnce).to.be.equal(true);
 
@@ -83,7 +84,7 @@ describe('Unit Test - PlanetController', function() {
             let repositoryList = sinon.stub(controller.repository, "list").rejects({});
             let sendSpy = sinon.spy(res, "send");
             
-            controller.list(req, res, next).then(()=> {
+            controller.query(req, res, next).then(()=> {
                 expect(repositoryList.calledOnce).to.be.equal(true);
                 expect(sendSpy.withArgs(500).calledOnce).to.be.equal(true);
                 sendSpy.restore();
@@ -96,7 +97,7 @@ describe('Unit Test - PlanetController', function() {
     describe('getByName', function() {
         it('Deve retornar BadRequest - Campos obrigatórios', () => {
             let sendSpy = sinon.spy(res, "send");
-            req = {params: {}};
+            req = {body: {}, query:{}};
 
             controller.getByName(req, res, next);
             expect(sendSpy.withArgs(400).calledOnce).to.be.equal(true);
@@ -107,7 +108,7 @@ describe('Unit Test - PlanetController', function() {
         it('Deve retornar o planeta informado e retornar HTTP Status Code 200', (done) => {
             let repositoryByName = sinon.stub(controller.repository, "getByName").resolves([{id:1}]);
             let sendSpy = sinon.spy(res, "send");
-            req = {params: {name: 'Alderaan'}};
+            req = {body: {}, query:{name: 'Alderaan'}};
 
             controller.getByName(req, res, next).then((result)=> {
                 expect(repositoryByName.calledOnce).to.be.equal(true);
@@ -122,7 +123,7 @@ describe('Unit Test - PlanetController', function() {
         it('Não retorna o planeta informado e retornar HTTP Status Code 404', (done) => {
             let repositoryByName = sinon.stub(controller.repository, "getByName").resolves(null);
             let sendSpy = sinon.spy(res, "send");
-            req = {params: {name: 'Alderaan'}};
+            req = {body: {}, query:{name: 'Alderaan'}};
 
             controller.getByName(req, res, next).then((result)=> {
                 expect(repositoryByName.calledOnce).to.be.equal(true);
@@ -137,7 +138,7 @@ describe('Unit Test - PlanetController', function() {
         it('Não deve retornar o planeta informado e retornar HTTP Status Code 500', (done) => {
             let repositoryByName = sinon.stub(controller.repository, "getByName").rejects('error');
             let sendSpy = sinon.spy(res, "send");
-            req = {params: {name: 'Alderaan'}};
+            req = {body: {}, query:{name: 'Alderaan'}};
 
             controller.getByName(req, res, next).then(()=> {
                 expect(repositoryByName.calledOnce).to.be.equal(true);
