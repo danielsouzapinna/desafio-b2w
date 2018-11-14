@@ -20,33 +20,33 @@ class PlanetRepository {
         });
     }
 
-    list(page, perPage) {
-      this.logger.info('PlanetRepository::list => Consultando planetas no banco de dados');
-      return this.model.find()
-        .skip((page - 1) * perPage)
+    query(queryString, pages=1, perPage=10) {
+      this.logger.info('PlanetRepository::query => Consultando planeta(s) no banco de dados');
+
+      const queryStringMap = new Map(Object.entries(queryString));
+      pages = queryStringMap.has('page') ? Number(queryStringMap.get('page')) : pages;
+      perPage = queryStringMap.has('per_page') ? Number(queryStringMap.get('per_page')) : perPage;
+      const { page, per_page, ...queryForMongo } = queryString;
+
+      
+      return this.model.find(queryForMongo)
+        .skip((pages - 1) * perPage)
         .limit(perPage)
         .then((doc) => {
-          return this.model.estimatedDocumentCount({})
-            .then((total) => {
-              let result = {};
-              result.count = total;
-              result.results = doc;
-              return result;
-            })
-        });
-      }
-
-    getByName(planetName) {
-      this.logger.info(`PlanetRepository::getByName => Consultando o planeta : ${planetName} no banco de dados`);
-        return this.model.findOne({ name: planetName }).exec()
-          .catch((error) => {
-            if (error.name === 'CastError') {
-              this.logger.error(`PlanetRepository::getByName => O planeta: ${planetName} não é válido.`);
-              throw new this.errors.InvalidArgumentError();
-            } else {
-              this.logger.error('PlanetRepository::getByName => Erro ao realizar consulta no banco de dados.');
-              throw new this.errors.InternalError();
-            }
+          if(doc > 1) {
+            return this.model.estimatedDocumentCount({})
+              .then((total) => {
+                let result = {};
+                result.count = total;
+                result.results = doc;
+                return result;
+              })
+          } else {
+            return doc[0];
+          }
+          
+        }).catch((error) => {
+          console.log(error);
         });
     }
 

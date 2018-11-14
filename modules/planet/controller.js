@@ -5,6 +5,7 @@ class PlanetController {
         this.service = require('./service');
         this.logger = require('../../winston-custom-log');
         this.config = require('../../config');
+        this.querystring = require('querystring');
     }
     
 
@@ -36,60 +37,20 @@ class PlanetController {
 
 
     query(req, res, next) {
-      let page = req.query && req.query.page ? Number(req.query.page) : Number(this.config.page);
-      let perPage = req.query && req.query.per_page ? Number(req.query.perPage) : Number(this.config.per_page);
-      
-      console.log(perPage)
-      if(!req.query.name) {
-        return this.getAll(req, res, next, page, perPage);
-      } else {
-        return this.getByName(req, res, next);
-      }
-    }
-
-
-
-
-    getAll(req, res, next, page, perPage) {
-      this.logger.info('PlanetController::list => Iniciando listagem de planetas.');
-        return this.repository.list(page, perPage).then((doc) => {
-          this.logger.info('PlanetController::list => Planetas retornados com sucesso.');
-          res.send(200, doc);
-          return next();
-        }).catch((err) => {
-          this.logger.error('PlanetController::list => Falha ao listar planetas.');
-          res.send(500);
-          return next();
-        });
-    }
-
-
-    getByName(req, res, next, page, perPage) {
-      this.logger.info(`PlanetController::getByNameQueryString => Iniciando consulta de planeta por nome: ${req.query.name}`);
-  
-      if (!req.query.name) {
-        this.logger.error('PlanetController::getByNameQueryString => Um ou mais campos obrigatórios não foram informados.');
-        res.send(400, { message: 'Campo Name é obrigatório.' });
-        return next();
-      }
-  
-      return this.repository.getByName(req.query.name).then((doc) => {
-        if (doc) {
-          this.logger.info(`PlanetController::getByNameQueryString => A consulta retornou o planeta: ${doc.name}.`);
-          res.send(200, doc);
-          return next();
-        }
-        this.logger.warn(`PlanetController::getByNameQueryString => A consulta não encontrou nenhum planeta de nome: ${req.query.name}.`);
-        res.send(404);
+      this.logger.info('PlanetController::query => Iniciando listagem de planeta(s).');
+      let queryString = this.querystring.parse(req.getQuery());
+      return this.repository.query(queryString).then((doc) => {
+        this.logger.info('PlanetController::query => Planeta(s) retornado(s) com sucesso.');
+        res.send(200, doc);
         return next();
       }).catch((err) => {
-        this.logger.error(`PlanetController::getByNameQueryString => Falha ao consultar o planeta de nome: ${req.query.name}.`);
+        this.logger.error('PlanetController::query => Falha ao listar planeta(s).');
         res.send(500);
         return next();
-      });
+      });  
     }
 
-
+  
     getById(req, res, next) {
       this.logger.info(`PlanetController::getById => Iniciando consulta do planeta de ID: ${req.params.id}`);
   

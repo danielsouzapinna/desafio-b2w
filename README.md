@@ -29,6 +29,7 @@ docker-compose -f docker-compose.test.yml up
 
 #### Listar
 * GET /planets
+* GET /planets?page=2&per_page=5
 
 #### Adicionar
 * POST /planets
@@ -48,3 +49,10 @@ docker-compose -f docker-compose.test.yml up
 
 #### Remover
 * DELETE /planets/id-desejado
+
+#### Paginação de Resultados
+| Para realizar paginação de resultados basta informar os seguintes parâmetros abaixo:
+* page = número da página
+* per_page = quantidade de registros por página
+
+Obs.: Caso não seja informado os parâmetros acima, o sistema irá utilizar como valores default: page=1 e per_page=10

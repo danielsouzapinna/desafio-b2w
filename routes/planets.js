@@ -7,8 +7,6 @@ module.exports = function(server) {
 
     server.get({path: PATH, version: '1.0.0'},  PlanetController.query.bind(PlanetController));
 
-    server.get({path: `${PATH}/name/:name`, version: '1.0.0'},  PlanetController.getByName.bind(PlanetController));
-
     server.get({path: `${PATH}/:id`, version: '1.0.0'},  PlanetController.getById.bind(PlanetController));
 
     server.del({path: `${PATH}/:id`, version: '1.0.0'},  PlanetController.remove.bind(PlanetController));
