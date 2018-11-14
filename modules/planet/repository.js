@@ -33,7 +33,7 @@ class PlanetRepository {
         .skip((pages - 1) * perPage)
         .limit(perPage)
         .then((doc) => {
-          if(doc > 1) {
+          if(doc.length > 1) {
             return this.model.estimatedDocumentCount({})
               .then((total) => {
                 let result = {};
