@@ -94,6 +94,11 @@ describe('Unit Test - PlanetController', function() {
         });
     });
 
+    describe('getByName', function() {
+        xit('Aguardando implementação dos testes', (done) => {
+        });
+    });
+
     describe('getById', function() {
         it('Deve retornar BadRequest - Campos obrigatórios', () => {
             let sendSpy = sinon.spy(res, "send");
