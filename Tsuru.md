@@ -18,6 +18,7 @@ sudo apt-get install tsuru-client
 #### Adicionando repositório padrão
 ```
 tsuru target-add default tsuru.globoi.com -s
+
 tsuru target add secure https://tsuru.globoi.com -s
 ```
 
@@ -30,14 +31,6 @@ tsuru login
 
 ## Servidor de Aplicação (PaaS)
 
-#### Remoção:
-
-```
-tsuru app-remove -a <NOME-APLICACAO>
-
-tsuru app-remove -a purchase-flow-api-dev
-```
-
 #### Criação:
 
 ```
@@ -46,10 +39,20 @@ tsuru app-create <NOME-APLICACAO> <TIPO-PLATAFORMA> --plan <NOME-PLANO> --team <
 tsuru app-create purchase-flow-api-dev nodejs --plan small --team gg_infoedg_consumidor --pool dev --router hipache_dev
 ```
 
-## Banco de Dados (DBaaS)
+#### Remoção:
 
 ```
-tsuru service-instance-add <TIPO-SERVICO> <NOME-SERVICO> --plan <NOME-PLANO> --team <NOME-TIME> --pool <TIPO-FILA> --router <TIPO-DE-ROTA>
+tsuru app-remove -a <NOME-APLICACAO>
+
+tsuru app-remove -a purchase-flow-api-dev
+```
+
+## Banco de Dados (DBaaS)
+
+#### Criação:
+
+```
+tsuru service-instance-add <TIPO-SERVICO> <NOME-SERVICO> <BANCO-DADOS> -t <NOME-TIME> -d <DESCRICAO>
 
 tsuru service-instance-add tsuru-dbaas-dev mysql_purchase_flow_api_dev mysql-5-7-25-small-single-node-rjdev-dev -t gg_infoedg_consumidor -d "MySQL for Purchase Flow Dev API"
 ```
@@ -68,6 +71,38 @@ O tipo de plano de escolhido irá definir a quantidade de memória, cpu e hd que
 
 ```
 tsuru plan-list
+```
+
+#### Criar variável de ambiente
+
+```
+tsuru env-set -a <NOME-APLICACAO> <NOME-VARIAVEL>=<VALOR> -p
+
+tsuru env-set -a purchase_flow_api_dev DBAAS_MYSQL_ENDPOINT=teste -p
+```
+
+#### Listar informações de um serviço
+
+```
+tsuru service-instance-info <TIPO-SERVICO> <NOME-SERVICO>
+
+tsuru service-instance-info tsuru-dbaas-dev mysql_purchase_flow_api_dev
+```
+
+#### Realizar o BIND entre um servidor de aplicação e um banco de dados
+
+```
+tsuru service-instance-bind <TIPO-SERVICO> <NOME-SERVICO> -a <NOME-APLICACAO>
+
+tsuru service-instance-bind tsuru-dbaas-dev mysql_purchase_flow_api_dev -a purchase-flow-api-dev
+```
+
+#### Entrar no shell de um servidor
+
+```
+tsuru app-shell -a <NOME-APLICACAO>
+
+tsuru app-shell -a purchase-flow-api-dev
 ```
 
 #### Tipo de Rota
