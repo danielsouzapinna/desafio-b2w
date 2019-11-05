@@ -12,7 +12,7 @@ curl -s https://packagecloud.io/install/repositories/tsuru/stable/script.deb.sh 
 sudo apt-get install tsuru-client
 ```
 
-Após realizar a instalação do client, é necessário efetuar o login no Tsuru para que seja possível criar seus servidores (aplicação/banco de dados). Adicione o repositório padrão de sua organização e efetue o login.
+> Após realizar a instalação do client, é necessário efetuar o login no Tsuru para que seja possível criar seus servidores (aplicação/banco de dados). Adicione o repositório padrão de sua organização e efetue o login.
 
 
 * Adicionando repositório padrão
