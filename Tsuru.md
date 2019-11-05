@@ -30,6 +30,14 @@ tsuru login
 
 ## Servidor de Aplicação (PaaS)
 
+#### Remoção:
+
+```
+tsuru app-remove -a <NOME-APLICACAO>
+
+tsuru app-remove -a purchase-flow-api-dev
+```
+
 #### Criação:
 
 ```
@@ -38,17 +46,22 @@ tsuru app-create <NOME-APLICACAO> <TIPO-PLATAFORMA> --plan <NOME-PLANO> --team <
 tsuru app-create purchase-flow-api-dev nodejs --plan small --team gg_infoedg_consumidor --pool dev --router hipache_dev
 ```
 
-#### Tipos de Plataformas (tsuru platform-list)
-- elixir-paulo
-- go
-- java
-- nodejs
-- perl
-- php
-- pypy
-- python
-- ruby
-- static
+## Banco de Dados (DBaaS)
+
+```
+tsuru service-instance-add <TIPO-SERVICO> <NOME-SERVICO> --plan <NOME-PLANO> --team <NOME-TIME> --pool <TIPO-FILA> --router <TIPO-DE-ROTA>
+
+tsuru service-instance-add tsuru-dbaas-dev mysql_purchase_flow_api_dev mysql-5-7-25-small-single-node-rjdev-dev -t gg_infoedg_consumidor -d "MySQL for Purchase Flow Dev API"
+```
+
+## Comandos Úteis
+
+#### Tipos de Plataformas
+O tipo de plataforma irá definir para qual linguagem de programação o servidor será configurado (Go, Java, NodeJS, etc).
+
+```
+tsuru platform-list
+```
 
 #### Opções de Planos
 O tipo de plano de escolhido irá definir a quantidade de memória, cpu e hd que seu servidor terá. Para visualizar as opções de planos disponíveis, execute o seguinte comando:
@@ -58,12 +71,9 @@ tsuru plan-list
 ```
 
 #### Tipo de Rota
-Para listar as opções de rota disponível, execute o comando:
+Para listar as opções de rotas disponíveis, execute o comando:
 ```
 tsuru pool-list
 ```
  > galeb_dev, galeb_prod, hipache_dev, hipache_prod, kube_router_dev, rpaas_be_rjdev
-
-
-
-## Banco de Dados (DBaaS)
+ 
