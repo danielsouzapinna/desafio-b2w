@@ -32,8 +32,6 @@ tsuru login
 
 #### Criação:
 
-A criação de um servidor de aplicação com o Tsuru é bem simples, basta executar um comando contendo alguns parâmetros de configuração para definir quem é o time responsável, nome da aplicação, quantidade memória e cpu. Veja abaixo as opções de configuração disponível e exemplo de criação:
-
 ```
 tsuru app-create <NOME-APLICACAO> <TIPO-PLATAFORMA> --plan <NOME-PLANO> --team <NOME-TIME> --pool <TIPO-FILA> --router <TIPO-DE-ROTA>
 
@@ -53,12 +51,19 @@ tsuru app-create purchase-flow-api-dev nodejs --plan small --team gg_infoedg_con
 - static
 
 #### Opções de Planos
-O tipo de plano de escolhido irá definir a quantidade de memória, cpu e hd que seu servidor terpa. Para visualizar as opções de planos disponíveis, execute o seguinte comando:
+O tipo de plano de escolhido irá definir a quantidade de memória, cpu e hd que seu servidor terá. Para visualizar as opções de planos disponíveis, execute o seguinte comando:
+
 ```
 tsuru plan-list
 ```
 
-#### Tipo de Fila (tsuru pool-list)
+#### Tipo de Rota
+Para listar as opções de rota disponível, execute o comando:
+```
+tsuru pool-list
+```
  > galeb_dev, galeb_prod, hipache_dev, hipache_prod, kube_router_dev, rpaas_be_rjdev
+
+
 
 ## Banco de Dados (DBaaS)
