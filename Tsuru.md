@@ -41,7 +41,7 @@ tsuru app-create purchase-flow-api-dev nodejs --plan small --team gg_infoedg_con
 ```
 
 * Tipos de Plataformas (tsuru platform-list)
-- elixir-paulo
+-> elixir-paulo
 - go
 - java
 - nodejs
@@ -52,16 +52,11 @@ tsuru app-create purchase-flow-api-dev nodejs --plan small --team gg_infoedg_con
 - ruby
 - static
 
-* Opções de Planos (tsuru plan-list)
-+------------+---------+------+-----------+---------+
-| Name       | Memory  | Swap | Cpu Share | Default |
-+------------+---------+------+-----------+---------+
-| small      | 256 MB  | 0 MB | 1024      | true    |
-| medium     | 512 MB  | 0 MB | 1024      | false   |
-| large      | 1024 MB | 0 MB | 1024      | false   |
-| huge       | 2048 MB | 0 MB | 1024      | false   |
-| extra-huge | 4096 MB | 0 MB | 1024      | false   |
-+------------+---------+------+-----------+---------+
+#### Opções de Planos
+O tipo de plano de escolhido irá definir a quantidade de memória, cpu e hd que seu servidor terpa. Para visualizar as opções de planos disponíveis, execute o seguinte comando:
+```
+tsuru plan-list
+```
 
 * Tipo de Fila (tsuru pool-list)
  > galeb_dev, galeb_prod, hipache_dev, hipache_prod, kube_router_dev, rpaas_be_rjdev
