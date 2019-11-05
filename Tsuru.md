@@ -15,13 +15,13 @@ sudo apt-get install tsuru-client
 > Após realizar a instalação do client, é necessário efetuar o login no Tsuru para que seja possível criar seus servidores (aplicação/banco de dados). Adicione o repositório padrão de sua organização e efetue o login.
 
 
-* Adicionando repositório padrão
+#### Adicionando repositório padrão
 ```
 tsuru target-add default tsuru.globoi.com -s
 tsuru target add secure https://tsuru.globoi.com -s
 ```
 
-* Login
+#### Login
 ```
 tsuru login
 ```
@@ -30,7 +30,7 @@ tsuru login
 
 ## Servidor de Aplicação (PaaS)
 
-* Criação:
+#### Criação:
 
 A criação de um servidor de aplicação com o Tsuru é bem simples, basta executar um comando contendo alguns parâmetros de configuração para definir quem é o time responsável, nome da aplicação, quantidade memória e cpu. Veja abaixo as opções de configuração disponível e exemplo de criação:
 
@@ -40,8 +40,8 @@ tsuru app-create <NOME-APLICACAO> <TIPO-PLATAFORMA> --plan <NOME-PLANO> --team <
 tsuru app-create purchase-flow-api-dev nodejs --plan small --team gg_infoedg_consumidor --pool dev --router hipache_dev
 ```
 
-* Tipos de Plataformas (tsuru platform-list)
--> elixir-paulo
+#### Tipos de Plataformas (tsuru platform-list)
+- elixir-paulo
 - go
 - java
 - nodejs
@@ -58,7 +58,7 @@ O tipo de plano de escolhido irá definir a quantidade de memória, cpu e hd que
 tsuru plan-list
 ```
 
-* Tipo de Fila (tsuru pool-list)
+#### Tipo de Fila (tsuru pool-list)
  > galeb_dev, galeb_prod, hipache_dev, hipache_prod, kube_router_dev, rpaas_be_rjdev
 
 ## Banco de Dados (DBaaS)
