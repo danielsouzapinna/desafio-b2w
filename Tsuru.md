@@ -59,6 +59,15 @@ tsuru service-instance-add tsuru-dbaas-dev mysql_purchase_flow_api_dev mysql-5-7
 
 ## Comandos Úteis
 
+#### Deploy de aplicação (NodeJS)
+Para realizar o deploy de uma aplicação no Tsuru, basta entrar no diretório raz da aplicação em seu ambiente de desenvolvimento (máquina local) e executar o comando abaixo:
+```
+tsuru app-deploy -a <NOME-APLICACAO> .
+
+tsuru app-deploy -a purchase-flow-api-dev .
+```
+> Exemplo feito em uma aplicação NodeJS
+
 #### Tipos de Plataformas
 O tipo de plataforma irá definir para qual linguagem de programação o servidor será configurado (Go, Java, NodeJS, etc).
 
