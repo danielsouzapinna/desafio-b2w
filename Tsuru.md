@@ -68,6 +68,13 @@ tsuru app-deploy -a purchase-flow-api-dev .
 ```
 > Exemplo feito em uma aplicação NodeJS
 
+#### Consultar Log
+
+```
+tsuru app-log -l <NUMERO-LINHAS> -a <NOME-APLICACAO>
+tsuru app-log -l 500 -a purchase-flow-api-dev
+```
+
 #### Tipos de Plataformas
 O tipo de plataforma irá definir para qual linguagem de programação o servidor será configurado (Go, Java, NodeJS, etc).
 
@@ -82,8 +89,23 @@ O tipo de plano de escolhido irá definir a quantidade de memória, cpu e hd que
 tsuru plan-list
 ```
 
+#### Tipo de Rota
+Para listar as opções de rotas disponíveis, execute o comando:
+```
+tsuru pool-list
+```
+ > galeb_dev, galeb_prod, hipache_dev, hipache_prod, kube_router_dev, rpaas_be_rjdev
+ 
 #### Criar variável de ambiente
 
+* Variável pública
+```
+tsuru env-set -a <NOME-APLICACAO> <NOME-VARIAVEL>=<VALOR>
+
+tsuru env-set -a purchase_flow_api_dev DBAAS_MYSQL_ENDPOINT=teste
+```
+
+* Variável privada
 ```
 tsuru env-set -a <NOME-APLICACAO> <NOME-VARIAVEL>=<VALOR> -p
 
@@ -113,11 +135,16 @@ tsuru app-shell -a <NOME-APLICACAO>
 
 tsuru app-shell -a purchase-flow-api-dev
 ```
-
-#### Tipo de Rota
-Para listar as opções de rotas disponíveis, execute o comando:
-```
-tsuru pool-list
-```
- > galeb_dev, galeb_prod, hipache_dev, hipache_prod, kube_router_dev, rpaas_be_rjdev
  
+ #### Listar variáveis de ambiente
+Uma vez que você tenha entrado no shell de um servidor
+
+* Listar todas as variáveis de ambiente
+```
+printenv
+```
+
+* Listar variáveis de ambiente "filtradas"
+```
+printenv | grep MYSQL
+```
