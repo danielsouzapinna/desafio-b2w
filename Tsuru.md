@@ -57,6 +57,14 @@ tsuru service-instance-add <TIPO-SERVICO> <NOME-SERVICO> <BANCO-DADOS> -t <NOME-
 tsuru service-instance-add tsuru-dbaas-dev mysql_purchase_flow_api_dev mysql-5-7-25-small-single-node-rjdev-dev -t gg_infoedg_consumidor -d "MySQL for Purchase Flow Dev API"
 ```
 
+## Realizar o BIND entre um servidor de aplicação e um banco de dados(DBaaS)
+
+```
+tsuru service-instance-bind <TIPO-SERVICO> <NOME-SERVICO> -a <NOME-APLICACAO>
+
+tsuru service-instance-bind tsuru-dbaas-dev mysql_purchase_flow_api_dev -a purchase-flow-api-dev
+```
+
 ## Comandos Úteis
 
 #### Deploy de aplicação (NodeJS)
@@ -118,14 +126,6 @@ tsuru env-set -a purchase_flow_api_dev DBAAS_MYSQL_ENDPOINT=teste -p
 tsuru service-instance-info <TIPO-SERVICO> <NOME-SERVICO>
 
 tsuru service-instance-info tsuru-dbaas-dev mysql_purchase_flow_api_dev
-```
-
-#### Realizar o BIND entre um servidor de aplicação e um banco de dados
-
-```
-tsuru service-instance-bind <TIPO-SERVICO> <NOME-SERVICO> -a <NOME-APLICACAO>
-
-tsuru service-instance-bind tsuru-dbaas-dev mysql_purchase_flow_api_dev -a purchase-flow-api-dev
 ```
 
 #### Entrar no shell de um servidor
