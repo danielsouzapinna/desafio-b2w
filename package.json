@@ -20,7 +20,7 @@
   "author": "Daniel Pinna",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "mongoose": "^5.3.9",
     "mongoose-timestamp": "^0.6.0",
     "morgan": "^1.9.1",
