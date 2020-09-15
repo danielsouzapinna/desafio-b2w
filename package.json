@@ -21,7 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "mongoose": "^5.3.9",
+    "mongoose": "^5.7.5",
     "mongoose-timestamp": "^0.6.0",
     "morgan": "^1.9.1",
     "restify": "^7.2.2",
